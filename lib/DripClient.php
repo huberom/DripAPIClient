@@ -1,6 +1,6 @@
 <?php
 
-namespace HOMC
+namespace HOMC;
 
 class DripClient
 {

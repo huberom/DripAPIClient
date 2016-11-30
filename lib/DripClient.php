@@ -37,7 +37,7 @@ class DripClient
     * @param string $apiURL Base Drip Api Url
     * @return void
     */
-    protected function __construct($apiKey = null, $apiURL = '')
+    public function __construct($apiKey = null, $apiURL = '')
     {
         $this->apiKey = $apiKey;
         $this->loadEndPoints();
@@ -162,7 +162,7 @@ class DripClient
     * Get a list of accounts
     * @return object
     */
-    protected function getAccountsList()
+    public function getAccountsList()
     {
         $response = $this->execute('accounts_list');
         return $response;
@@ -173,7 +173,7 @@ class DripClient
     * @param array $params Array of additional parameters
     * @return object
     */
-    protected function getWorkflowsList($params = [])
+    public function getWorkflowsList($params = [])
     {
         $response = $this->execute('workflows_list', $params);
         return $response;
@@ -184,7 +184,7 @@ class DripClient
     * @param array $params Array of additional parameters
     * @return object
     */
-    protected function getCampaignsList($params = [])
+    public function getCampaignsList($params = [])
     {
         $response = $this->execute('campaigns_list', $params);
         return $response;
@@ -195,7 +195,7 @@ class DripClient
     * @param array $params Array of additional parameters
     * @return object
     */
-    protected function addSubscriber($params = [])
+    public function addSubscriber($params = [])
     {
         $response = $this->execute('add_subscriber', $params);
         return $response;
@@ -206,7 +206,7 @@ class DripClient
     * @param array $params Array of additional parameters
     * @return object
     */
-    protected function removeSubscriber($params = [])
+    public function removeSubscriber($params = [])
     {
         $response = $this->execute('remove_subscriber', $params);
         return $response;
@@ -217,7 +217,7 @@ class DripClient
     * @param array $params Array of additional parameters
     * @return object
     */
-    protected function addTag($params = [])
+    public function addTag($params = [])
     {
         $response = $this->execute('tag_subscriber', $params);
         return $response;
@@ -228,7 +228,7 @@ class DripClient
     * @param array $params Array of additional parameters
     * @return object
     */
-    protected function removeTag($params = [])
+    public function removeTag($params = [])
     {
         $response = $this->execute('remove_tag', $params);
         return $response;
@@ -239,7 +239,7 @@ class DripClient
     * @param array $params Array of additional parameters
     * @return object
     */
-    protected function addToWorkflow($params = [])
+    public function addToWorkflow($params = [])
     {
         $response = $this->execute('add_to_workflow', $params);
         return $response;
@@ -250,7 +250,7 @@ class DripClient
     * @param array $params Array of additional parameters
     * @return object
     */
-    protected function deleteFromWorkflow($params = [])
+    public function deleteFromWorkflow($params = [])
     {
         $response = $this->execute('remove_from_workflow', $params);
         return $response;
@@ -261,7 +261,7 @@ class DripClient
     * @param array $params Array of additional parameters
     * @return object
     */
-    protected function addToCampaign($params = [])
+    public function addToCampaign($params = [])
     {
         $response = $this->execute('add_to_campaign', $params);
         return $response;
@@ -272,7 +272,7 @@ class DripClient
     * @param array $params Array of additional parameters
     * @return object
     */
-    protected function recordEvent($params = [])
+    public function recordEvent($params = [])
     {
         $response = $this->execute('record_event', $params);
         return $response;

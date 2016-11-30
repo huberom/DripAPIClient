@@ -1,6 +1,11 @@
 # DripAPIClient
 Lightweight object-oriented PHP (JSON) client for DRIP Email Marketing API
 
+## Installation
+With Composer:
+```sh
+composer require homc/drip-api-client
+```
 
 ## Basic Usage
 

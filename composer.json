@@ -12,7 +12,7 @@
         {
             "name": "Huber Munoz",
             "email": "huberom@hotmail.com"
-        },
+        }
     ],
     "autoload": {
         "psr-4": {

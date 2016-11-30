@@ -1,0 +1,23 @@
+{
+    "name": "homc/drip-api-client",
+    "description": "PHP wraaper for DRIP Email Marketing API.",
+    "type": "library",
+    "require": {
+        "php": ">= 5.4.0",
+        "ext-curl": "*",
+        "ext-json": "*"
+    },
+    "license": "GNU GPL v3",
+    "authors": [
+        {
+            "name": "Huber Munoz",
+            "email": "huberom@hotmail.com"
+        },
+    ],
+    "autoload": {
+        "psr-4": {
+            "HOMC\\": "lib/"
+        }
+    },
+    "minimum-stability": "stable"
+}

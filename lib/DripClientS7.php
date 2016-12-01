@@ -2,7 +2,7 @@
 
 namespace HOMC;
 
-use HOMC/DripClient;
+use HOMC\DripClient;
 
 class DripClientS7 extends DripClient
 {

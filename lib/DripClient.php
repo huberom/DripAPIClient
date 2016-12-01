@@ -92,7 +92,7 @@ class DripClient
                     'method' => 'POST',
                     'path' => '/<account_id>/subscribers',
                     'response' => 'links',
-                    'arguments' => '{"subscribers": [{"email": "<email>","custom_fields": {"first_name": "<name>"}}]}',
+                    'arguments' => '{"subscribers": [{"email": "<email>","custom_fields": {"first_name": "<name>"}, "tags": ["<tag>"]}]}',
                 ],
                 'remove_subscriber' => [
                     'method' => 'DELETE',
@@ -175,7 +175,8 @@ class DripClient
     */
     public function getWorkflowsList($params = [])
     {
-        $response = $this->execute('workflows_list', $params);
+        $type = 'workflows_list';
+        $response = $this->execute($type, $params);
         return $response;
     }
 
@@ -186,7 +187,8 @@ class DripClient
     */
     public function getCampaignsList($params = [])
     {
-        $response = $this->execute('campaigns_list', $params);
+        $type = 'campaigns_list';
+        $response = $this->execute($type, $params);
         return $response;
     }
 
@@ -197,7 +199,8 @@ class DripClient
     */
     public function addSubscriber($params = [])
     {
-        $response = $this->execute('add_subscriber', $params);
+        $type = 'add_subscriber';
+        $response = $this->execute($type, $params);
         return $response;
     }
 
@@ -208,7 +211,8 @@ class DripClient
     */
     public function removeSubscriber($params = [])
     {
-        $response = $this->execute('remove_subscriber', $params);
+        $type = 'remove_subscriber';
+        $response = $this->execute($type, $params);
         return $response;
     }
 
@@ -219,7 +223,8 @@ class DripClient
     */
     public function addTag($params = [])
     {
-        $response = $this->execute('tag_subscriber', $params);
+        $type = 'tag_subscriber';
+        $response = $this->execute($type, $params);
         return $response;
     }
 
@@ -230,7 +235,14 @@ class DripClient
     */
     public function removeTag($params = [])
     {
-        $response = $this->execute('remove_tag', $params);
+        $type = 'remove_tag';
+
+        if (!empty($params['tag'])) {
+            $string = urldecode($params['tag']);
+            $params['tag'] = urlencode($string);
+        }
+
+        $response = $this->execute($type, $params);
         return $response;
     }
 
@@ -241,7 +253,8 @@ class DripClient
     */
     public function addToWorkflow($params = [])
     {
-        $response = $this->execute('add_to_workflow', $params);
+        $type = 'add_to_workflow';
+        $response = $this->execute($type, $params);
         return $response;
     }
 
@@ -252,7 +265,8 @@ class DripClient
     */
     public function deleteFromWorkflow($params = [])
     {
-        $response = $this->execute('remove_from_workflow', $params);
+        $type = 'remove_from_workflow';
+        $response = $this->execute($type, $params);
         return $response;
     }
 
@@ -263,7 +277,8 @@ class DripClient
     */
     public function addToCampaign($params = [])
     {
-        $response = $this->execute('add_to_campaign', $params);
+        $type = 'add_to_campaign';
+        $response = $this->execute($type, $params);
         return $response;
     }
 
@@ -274,8 +289,46 @@ class DripClient
     */
     public function recordEvent($params = [])
     {
-        $response = $this->execute('record_event', $params);
+        $type = 'record_event';
+        $response = $this->execute($type, $params);
         return $response;
+    }
+
+    /**
+    * Validates if params arraya has required params for specific request api type
+    * @param string $type   API request type identifier
+    * @param array  $params Array of additional parameters
+    * @return boolean
+    */
+    public function validParams($type, $params)
+    {
+        if (empty($this->endPoints[$type])) {
+            return false;
+        }
+
+        // path
+        $string = $this->endPoints[$type]['path'];
+        preg_match_all("!\<(\w+)\>!", $string, $matches);
+
+        foreach ($matches[1] as $key => $value) {
+            if (empty($params[$value])) {
+                return false;
+            }
+        }
+
+        // arguments
+        $matches = [0 => [], 1 => []];
+        if (!empty($this->endPoints[$type]['arguments'])) {
+            $string = $this->endPoints[$type]['arguments'];
+            preg_match_all("!\<(\w+)\>!", $string, $matches);
+            foreach ($matches[1] as $key => $value) {
+                if (empty($params[$value])) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
     }
 
     /**
@@ -335,6 +388,11 @@ class DripClient
     private function execute($type, $params=[])
     {
         if (empty($this->endPoints[$type])) {
+            return false;
+        }
+
+        $validParams = $this->validParams($type, $params);
+        if (!$validParams) {
             return false;
         }
 

@@ -396,6 +396,10 @@ class DripClient
             return false;
         }
 
+        if (!empty($params['name'])) {
+            $params['name'] = $this->getFirstName($params['name']);
+        }
+
         // Set CURL SSL false
         $this->curlSSL = false;
         $apiUrl    = $this->createEndPointUrl($type, $params);
@@ -446,6 +450,14 @@ class DripClient
         };
 
         return preg_replace_callback($expr, $callback, $subject);
+    }
+
+    public function getFirstName($name)
+    {
+        $nameArray = explode(' ', $name);
+        $firstName = (isset($nameArray[0])) ? $nameArray[0] : $name;
+
+        return $firstName;
     }
 
     /**

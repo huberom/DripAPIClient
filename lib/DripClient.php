@@ -322,6 +322,11 @@ class DripClient
             $string = $this->endPoints[$type]['arguments'];
             preg_match_all("!\<(\w+)\>!", $string, $matches);
             foreach ($matches[1] as $key => $value) {
+
+                if ($type == 'add_subscriber' AND $value == 'tag') {
+                    continue;
+                }
+
                 if (empty($params[$value])) {
                     return false;
                 }

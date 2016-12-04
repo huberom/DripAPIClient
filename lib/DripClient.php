@@ -492,7 +492,6 @@ class DripClient
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_HEADER, false);
         curl_setopt($ch, CURLOPT_HTTPHEADER, $processedHeaders);
-        curl_setopt($ch, CURLOPT_VERBOSE, true);
 
         if ($this->curlSSL === true) {
             curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
